@@ -1,1 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Virtual Environment
+venv/
+
+# Data
+data/
+Raw-Data/
+
+# Model files
+model/
+*.pkl
+*.joblib
+
+# Environment
 .env
+
+# OS
+.DS_Store.env
