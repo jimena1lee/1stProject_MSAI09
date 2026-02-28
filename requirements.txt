@@ -5,3 +5,8 @@ pandas
 numpy
 matplotlib
 jupyterlab
+requests
+seaborn
+selenium
+webdriver-manager
+
