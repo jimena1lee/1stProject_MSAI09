@@ -1,5 +1,3 @@
-torch
-torchvision
 scikit-learn
 pandas
 numpy
@@ -9,4 +7,5 @@ requests
 seaborn
 selenium
 webdriver-manager
+geopandas
 
