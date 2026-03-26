@@ -1,36 +1,159 @@
-# 1stProject_MSAI09
+# 스쿨존 안전시설물 기반 어린이 사고 위험도 예측 모델
+# School Zone Safety Risk Prediction Model
 
-MS ai school 9기 1차 프로젝트 진행을 위한 공동 문서입니다.
+> MS AI School 9기 1차 프로젝트 | 1st Project — MS AI School Cohort 9
 
-[팀원] 이지원, 김시언, 지경민, 조윤지, 전광민, 이승아 6명
+---
 
-[사용방법]
+## 프로젝트 개요 | Overview
 
-[일정]
-2/23~2/24 주제 설정 단계
-* 주제를 선정하고 팀원 간 역할을 분담한다.
-* 데일리 리포트를 제출한다.
+**[한국어]**
+전국 스쿨존(어린이 보호구역)의 안전시설물 현황과 도로 구조를 분석하여, 스쿨존별 **어린이 교통사고 위험도**를 예측하는 머신러닝 모델을 개발합니다.
+성남시·광명시 두 지역을 대상으로 시설물 데이터와 로드뷰 이미지를 결합하여 위험 점수(Risk Score)를 산출합니다.
 
-2/25~2/26 데이터 수집 및 검증 단계
-* 데이터를 수집한다.
-* 수집한 데이터를 검증하고 필요 시 재수집한다.
+**[English]**
+We develop a machine learning model that predicts **child traffic accident risk** in school zones across South Korea by analyzing safety facility data and road structure.
+Using data from Seongnam and Gwangmyung cities, we combine facility counts with road-view imagery to produce a risk score per school zone.
 
-2/27~3/3 데이터 전처리 단계
-* 데이터 증강을 진행한다.
-* 데이터 및 이미지를 전처리한다.
+---
 
-3/4~3/5 데이터 모델링 및 평가 단계
-* Azure Machine Learning Studio, Azure Open AI Studio, Language Studio, Computer Vision 등을 활용하여 모델링한다.
-* 개발한 모델의 결과를 평가하고 수정한다.
-* 데일리 리포트를 제출한다.
+## 팀원 | Team
 
-3/6 상품화 단계
-* 앱 및 웹사이트를 구현한다.
+| 이름 | 역할 |
+|------|------|
+| 이지원 | 사고 데이터 수집·전처리 |
+| 김시언 | 사고 데이터 수집·전처리 |
+| 지경민 | 외부 안전위험요소 데이터 수집 |
+| 조윤지 | 스쿨존 목록·안전시설물 수집 |
+| 전광민 | 도로 특성 데이터 수집 |
+| 이승아 | 스쿨존 목록·안전시설물 수집 |
 
-3/9 발표자료 작성 단계
-* 팀별 발표자료를 작성한다.
+---
 
-3/10 프로젝트 발표 및 평가 단계
-* 팀별 발표(20분) 및 심사평가(5분 내외)를 진행한다.
-* 데일리 리포트와 발표 PPT를 제출한다.
+## 프로젝트 흐름 | Pipeline
 
+```
+[01_data]          원시 데이터 수집 (스쿨존 목록, 사고 기록, 안전시설물, 로드뷰)
+     ↓
+[02_preprocessing] 지역별 데이터 정제·스케일링·통합 (성남시, 광명시)
+     ↓
+[03_modeling]      머신러닝 모델 개발 (prototype → final)
+     ‖                ├── prototype: 회귀/분류 실험, 모델 비교
+     ‖                └── final: 위험도 점수 산출 최종 모델 (calibrated)
+     ↓
+[04_computer_vision] Azure Custom Vision으로 로드뷰 이미지 분석
+                       → Structure Risk(도로 구조 위험도) 추가 변수 생성
+```
+
+---
+
+## 디렉토리 구조 | Repository Structure
+
+```
+.
+├── 01_data/
+│   ├── raw/                        # 원시 데이터 | Raw data
+│   │   ├── 00_school_zone_list/    # 어린이 보호구역 목록
+│   │   ├── 01_accident_data/       # 스쿨존 교통사고 데이터
+│   │   ├── 02_safety_facilities/   # 안전시설물 (CCTV, 신호등, 횡단보도 등)
+│   │   ├── 03_road_characteristics/# 도로 특성 (차로수, 버스정류장 등)
+│   │   └── 04_external_risk_factors/ # 외부 위험요소 (인구, 조명, 지구대 등)
+│   └── processed/                  # 전처리 완료 데이터 | Processed data
+│       ├── seongnam_scaled.csv
+│       ├── seongnam_scaled_with_info.csv
+│       ├── gwangmyung_scaled.csv
+│       ├── gwangmyung_scaled_with_info.csv
+│       ├── facility_feature_summary_sn.csv
+│       └── facility_feature_summary_gm.csv
+│
+├── 02_preprocessing/               # 전처리 코드 | Preprocessing notebooks
+│   ├── gwangmyung/                 # 광명시 전처리
+│   ├── seongnam/                   # 성남시 전처리
+│   ├── facility_data_preprocessing_GM.ipynb
+│   ├── facility_data_preprocessing_SN.ipynb
+│   ├── gm_scaling_analysis_report.md
+│   └── sn_scaling_analysis_report.md
+│
+├── 03_modeling/                    # 모델링 | Modeling
+│   ├── prototype/                  # 실험·탐색 단계 | Experimental stage
+│   │   ├── model_prototype.ipynb
+│   │   ├── regression_integrated.ipynb
+│   │   ├── structure_risk_logistic.ipynb
+│   │   ├── model_comparison_classification.ipynb
+│   │   └── regression_integrated_pipeline.md
+│   └── final/                      # 최종 모델 | Final model
+│       ├── 0_ModelingCode_20260304.ipynb
+│       ├── 2nd_Model_final.ipynb
+│       ├── structure_risk_model.pkl
+│       ├── 2nd_model_pipeline.pkl
+│       └── 2nd_model_calibrated.pkl
+│
+├── 04_computer_vision/             # 로드뷰 이미지 분석 | Road-view image analysis
+│   ├── notebooks/                  # Azure Custom Vision 분석 코드
+│   ├── data/                       # 추출된 이미지 피처 CSV
+│   ├── roadview_images/            # 스쿨존 로드뷰 이미지 (~4,000장)
+│   └── structure_risk_pipeline.md  # Structure Risk 계산 파이프라인 문서
+│
+├── docs/
+│   └── 시스템_아키텍처.jpg          # 전체 시스템 아키텍처 다이어그램
+│
+├── requirements.txt
+└── setup.sh
+```
+
+---
+
+## 주요 결과 | Key Results
+
+### Structure Risk (도로 구조 위험도)
+- **방법**: 로드뷰 이미지 4,004장 → Azure Custom Vision Object Detection + Classification → Logistic Regression
+- **AUC**: 0.71 (전국 범위), 0.63 (성남시 재검증)
+- **Precision@20%**: 0.75 — 위험 상위 20% 지역 중 75%가 실제 사고 지역
+
+### 시설물 기반 위험도 모델 (Facility Risk)
+- **방법**: 안전시설물 10개 변수 + 어린이 인구 비율 → Random Forest / XGBoost
+- 성남시·광명시 두 지역 교차 검증 완료
+- 최종 모델: `03_modeling/final/structure_risk_model.pkl`
+
+---
+
+## 사용법 | Getting Started
+
+```bash
+# 환경 설치 | Install dependencies
+pip install -r requirements.txt
+
+# 또는 setup 스크립트 실행 | Or run setup script
+bash setup.sh
+```
+
+주요 실행 순서 | Recommended execution order:
+
+1. `02_preprocessing/facility_data_preprocessing_SN.ipynb` — 성남시 전처리
+2. `02_preprocessing/facility_data_preprocessing_GM.ipynb` — 광명시 전처리
+3. `04_computer_vision/notebooks/street_view_preprocessing.ipynb` — 로드뷰 이미지 전처리
+4. `03_modeling/prototype/structure_risk_logistic.ipynb` — Structure Risk 모델 학습
+5. `03_modeling/final/0_ModelingCode_20260304.ipynb` — 최종 위험도 스코어링
+
+---
+
+## 기술 스택 | Tech Stack
+
+- **Data**: Python (pandas, scikit-learn, geopandas)
+- **Modeling**: Logistic Regression, Random Forest, XGBoost
+- **Computer Vision**: Azure Custom Vision (Object Detection + Classification)
+- **Visualization**: matplotlib, seaborn
+
+---
+
+## 프로젝트 일정 | Schedule
+
+| 기간 | 단계 |
+|------|------|
+| 2/23–2/24 | 주제 설정 및 역할 분담 |
+| 2/25–2/26 | 데이터 수집 및 검증 |
+| 2/27–3/3  | 데이터 전처리 |
+| 3/4–3/5   | 모델링 및 평가 |
+| 3/6       | 상품화 (앱/웹 구현) |
+| 3/9       | 발표자료 작성 |
+| 3/10      | 발표 및 평가 |
