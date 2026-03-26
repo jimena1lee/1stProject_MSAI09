@@ -7,11 +7,9 @@
 
 ## 프로젝트 개요 | Overview
 
-**[한국어]**
 전국 스쿨존(어린이 보호구역)의 안전시설물 현황과 도로 구조를 분석하여, 스쿨존별 **어린이 교통사고 위험도**를 예측하는 머신러닝 모델을 개발합니다.
 성남시·광명시 두 지역을 대상으로 시설물 데이터와 로드뷰 이미지를 결합하여 위험 점수(Risk Score)를 산출합니다.
 
-**[English]**
 We develop a machine learning model that predicts **child traffic accident risk** in school zones across South Korea by analyzing safety facility data and road structure.
 Using data from Seongnam and Gwangmyung cities, we combine facility counts with road-view imagery to produce a risk score per school zone.
 
@@ -19,14 +17,14 @@ Using data from Seongnam and Gwangmyung cities, we combine facility counts with 
 
 ## 팀원 | Team
 
-| 이름 | 역할 |
-|------|------|
-| 이지원 | 사고 데이터 수집·전처리 |
-| 김시언 | 사고 데이터 수집·전처리 |
-| 지경민 | 외부 안전위험요소 데이터 수집 |
-| 조윤지 | 스쿨존 목록·안전시설물 수집 |
-| 전광민 | 도로 특성 데이터 수집 |
-| 이승아 | 스쿨존 목록·안전시설물 수집 |
+| 이름   | 메인 역할              | 서브 역할 (협업 참여)                    | 참여 파트                         |
+|--------|------------------------|------------------------------------------|----------------------------------|
+| 이지원 | PM / CV / 통합         | 로드뷰 처리, 라벨링, 모델 → 대시보드 연결 | PM / CV / ML / Integration       |
+| 조윤지 | 기획 / 데이터          | 발표 자료, 데이터 수집 관리              | Planning / Data / Presentation   |
+| 전광민 | ML 모델링              | 모델 검증, 데이터 협업                   | ML / Validation / Data           |
+| 김시연 | 데이터 전처리          | EDA, 모델 입력 데이터 최적화             | Data / EDA / ML                  |
+| 이승아 | 대시보드 개발          | 시각화 설계, 결과 해석                   | Dashboard / Front / EDA          |
+| 지경민 | 데이터 처리 / ML 연결  | 공간결합, 안전점수, 모델 검증            | Data / ML / Integration          |
 
 ---
 
