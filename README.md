@@ -31,17 +31,38 @@ Using data from Seongnam and Gwangmyung cities, we combine facility counts with 
 ## 프로젝트 흐름 | Pipeline
 
 ```
-[01_data]          원시 데이터 수집 (스쿨존 목록, 사고 기록, 안전시설물, 로드뷰)
-     ↓
-[02_preprocessing] 지역별 데이터 정제·스케일링·통합 (성남시, 광명시)
-     ↓
-[03_modeling]      머신러닝 모델 개발 (prototype → final)
-     ‖                ├── prototype: 회귀/분류 실험, 모델 비교
-     ‖                └── final: 위험도 점수 산출 최종 모델 (calibrated)
-     ↓
-[04_computer_vision] Azure Custom Vision으로 로드뷰 이미지 분석
-                       → Structure Risk(도로 구조 위험도) 추가 변수 생성
+flowchart LR
+
+    A[01 Data Ingestion<br/>- 스쿨존, 사고, 시설물<br/>- 로드뷰 이미지 수집<br/>- Azure Blob 저장]
+
+    B[02 Preprocessing<br/>- 지역 필터링 (성남/광명)<br/>- 결측치 처리 / 스케일링<br/>- 공간 결합]
+
+    C[03 Computer Vision<br/>Azure Custom Vision<br/>- Object Detection<br/>- Classification<br/>→ Structure Risk 생성]
+
+    D[04 Feature Integration<br/>- 정형 데이터 + CV 결과 결합<br/>→ 모델 입력 데이터]
+
+    E[05 Modeling<br/>Logistic Regression (L1/Lasso)<br/>- 교차검증<br/>→ 위험 확률 / 안전 점수]
+
+    F[06 Model Interpretation<br/>- SHAP 기반 변수 중요도]
+
+    G[07 Service<br/>Streamlit Dashboard<br/>- Folium 지도<br/>- 정책 시뮬레이터<br/>- 의사결정 지원]
+
+    A --> B --> C --> D --> E --> F --> G
+
+- 본 시스템은 **2-stage pipeline 구조**로 설계됨
+  1. Computer Vision을 통해 도로 구조 위험도(Structure Risk) 생성
+  2. 정형 데이터와 결합하여 사고 위험 확률을 예측
+
+- 주요 흐름:
+  Data → Preprocessing → CV Feature Extraction → Feature Integration → ML Modeling → Interpretation → Dashboard
+
+- 최종 산출물:
+  - 스쿨존별 위험 확률
+  - 안전 점수
+  - 정책 시뮬레이션 기반 의사결정 지원
 ```
+
+
 
 ---
 
