@@ -161,7 +161,13 @@ Using data from Seongnam and Gwangmyung cities, we combine facility counts with 
 
 Streamlit 기반 인터랙티브 대시보드 배포
 
-👉 **[라이브 데모](https://schoolzone-dashboard-ybojphvjsgnxxx6cfj6uix.streamlit.app)**
+![Overview](docs/dashboard_01_overview.png)
+![Map](docs/dashboard_02_map.png)
+![Facilities](docs/dashboard_03_facilities.png)
+![Comparison](docs/dashboard_04_comparison.png)
+![Model](docs/dashboard_05_model.png)
+
+👉 **[대시보드 시연 영상 보기](https://youtu.be/vuAs03AP7Iw)**
 
 - Folium 지도: 스쿨존 위치 + 안전 등급 시각화
 - D등급 구역 시설 개선 시뮬레이션
