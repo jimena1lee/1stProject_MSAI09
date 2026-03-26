@@ -30,10 +30,9 @@ Using data from Seongnam and Gwangmyung cities, we combine facility counts with 
 
 ## 프로젝트 흐름 | Pipeline
 
-
+```mermaid
 flowchart LR
 
-```mermaid
     A[01 Data Ingestion\n- 스쿨존, 사고, 시설물\n- 로드뷰 이미지 수집\n- Azure Blob 저장]
 
     B[02 Preprocessing\n- 지역 필터링 (성남/광명)\n- 결측치 처리 / 스케일링\n- 공간 결합]
