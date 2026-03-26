@@ -30,7 +30,6 @@ Using data from Seongnam and Gwangmyung cities, we combine facility counts with 
 
 ## 프로젝트 흐름 | Pipeline
 
-```
 flowchart LR
 
     A[01 Data Ingestion<br/>- 스쿨존, 사고, 시설물<br/>- 로드뷰 이미지 수집<br/>- Azure Blob 저장]
@@ -48,7 +47,8 @@ flowchart LR
     G[07 Service<br/>Streamlit Dashboard<br/>- Folium 지도<br/>- 정책 시뮬레이터<br/>- 의사결정 지원]
 
     A --> B --> C --> D --> E --> F --> G
-
+    
+```
 - 본 시스템은 **2-stage pipeline 구조**로 설계됨
   1. Computer Vision을 통해 도로 구조 위험도(Structure Risk) 생성
   2. 정형 데이터와 결합하여 사고 위험 확률을 예측
