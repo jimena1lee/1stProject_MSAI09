@@ -30,27 +30,39 @@ Using data from Seongnam and Gwangmyung cities, we combine facility counts with 
 
 ## 프로젝트 흐름 | Pipeline
 
-```mermaid
-flowchart LR
-
-    A[01 Data Ingestion\n- 스쿨존, 사고, 시설물\n- 로드뷰 이미지 수집\n- Azure Blob 저장]
-
-    B[02 Preprocessing\n- 지역 필터링 (성남/광명)\n- 결측치 처리 / 스케일링\n- 공간 결합]
-
-    C[03 Computer Vision\nAzure Custom Vision\n- Object Detection\n- Classification\n→ Structure Risk 생성]
-
-    D[04 Feature Integration\n- 정형 데이터 + CV 결과 결합\n→ 모델 입력 데이터]
-
-    E[05 Modeling\nLogistic Regression (L1/Lasso)\n- 교차검증\n→ 위험 확률 / 안전 점수]
-
-    F[06 Model Interpretation\n- SHAP 기반 변수 중요도]
-
-    G[07 Service\nStreamlit Dashboard\n- Folium 지도\n- 정책 시뮬레이터\n- 의사결정 지원]
-
-    A --> B --> C --> D --> E --> F --> G
 ```
-    
-```
+[01_data_ingestion]          원시 데이터 수집 및 저장
+                            - 스쿨존 목록, 사고 기록, 안전시설물 (CSV)
+                            - 로드뷰 이미지 수집 (KakaoMap)
+                            - Azure Blob Storage 저장
+     ↓
+[02_preprocessing]           데이터 정제 및 통합 (성남시, 광명시)
+                            - 결측치 처리 / 스케일링
+                            - 공간 결합 (시설물 + 사고 + 위치)
+     ↓
+[03_computer_vision]         도로 구조 분석 (1단계 모델)
+                            - Azure Custom Vision
+                            - Object Detection / Classification
+                            → Structure Risk (구조 위험도) 생성
+     ↓
+[04_feature_integration]     데이터 통합
+                            - 정형 데이터 + Structure Risk 결합
+                            → 모델 입력 Feature 구성
+     ↓
+[05_modeling]                위험도 예측 모델 (2단계 모델)
+     ‖                      ├── prototype: 회귀/분류 실험, 모델 비교
+     ‖                      └── final: Logistic Regression 기반 최종 모델 (L1/Lasso)
+     ‖                          → 위험 확률 및 안전 점수 산출
+     ↓
+[06_model_interpretation]    모델 해석
+                            - SHAP 기반 변수 중요도 분석
+     ↓
+[07_service]                서비스 및 시각화
+                            - Streamlit Dashboard
+                            - 지도 시각화 (Folium)
+                            - 정책 시뮬레이터 (시설 추가 효과 분석)
+                            → 의사결정 지원
+---
 - 본 시스템은 **2-stage pipeline 구조**로 설계됨
   1. Computer Vision을 통해 도로 구조 위험도(Structure Risk) 생성
   2. 정형 데이터와 결합하여 사고 위험 확률을 예측
