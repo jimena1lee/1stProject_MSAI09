@@ -32,19 +32,19 @@ Using data from Seongnam and Gwangmyung cities, we combine facility counts with 
 
 flowchart LR
 
-    A[01 Data Ingestion<br/>- 스쿨존, 사고, 시설물<br/>- 로드뷰 이미지 수집<br/>- Azure Blob 저장]
+    A[01 Data Ingestion\n- 스쿨존, 사고, 시설물\n- 로드뷰 이미지 수집\n- Azure Blob 저장]
 
-    B[02 Preprocessing<br/>- 지역 필터링 (성남/광명)<br/>- 결측치 처리 / 스케일링<br/>- 공간 결합]
+    B[02 Preprocessing\n- 지역 필터링 (성남/광명)\n- 결측치 처리 / 스케일링\n- 공간 결합]
 
-    C[03 Computer Vision<br/>Azure Custom Vision<br/>- Object Detection<br/>- Classification<br/>→ Structure Risk 생성]
+    C[03 Computer Vision\nAzure Custom Vision\n- Object Detection\n- Classification\n→ Structure Risk 생성]
 
-    D[04 Feature Integration<br/>- 정형 데이터 + CV 결과 결합<br/>→ 모델 입력 데이터]
+    D[04 Feature Integration\n- 정형 데이터 + CV 결과 결합\n→ 모델 입력 데이터]
 
-    E[05 Modeling<br/>Logistic Regression (L1/Lasso)<br/>- 교차검증<br/>→ 위험 확률 / 안전 점수]
+    E[05 Modeling\nLogistic Regression (L1/Lasso)\n- 교차검증\n→ 위험 확률 / 안전 점수]
 
-    F[06 Model Interpretation<br/>- SHAP 기반 변수 중요도]
+    F[06 Model Interpretation\n- SHAP 기반 변수 중요도]
 
-    G[07 Service<br/>Streamlit Dashboard<br/>- Folium 지도<br/>- 정책 시뮬레이터<br/>- 의사결정 지원]
+    G[07 Service\nStreamlit Dashboard\n- Folium 지도\n- 정책 시뮬레이터\n- 의사결정 지원]
 
     A --> B --> C --> D --> E --> F --> G
     
