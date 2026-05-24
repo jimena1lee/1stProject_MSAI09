@@ -26,7 +26,7 @@ Using data from Seongnam and Gwangmyung cities, we combine facility counts with 
 | 이지원 | PM / CV / 통합         | 로드뷰 처리, 라벨링, 모델 → 대시보드 연결 | PM / CV / ML / Integration       |
 | 조윤지 | 기획 / 데이터          | 발표 자료, 데이터 수집 관리               | Planning / Data / Presentation   |
 | 전광민 | ML 모델링              | 모델 검증, 데이터 협업                    | ML / Validation / Data           |
-| 김시연 | 데이터 전처리          | EDA, 모델 입력 데이터 최적화              | Data / EDA / ML                  |
+| 김시언 | 데이터 전처리          | EDA, 모델 입력 데이터 최적화              | Data / EDA / ML                  |
 | 이승아 | 대시보드 개발          | 시각화 설계, 결과 해석                    | Dashboard / Front / EDA          |
 | 지경민 | 데이터 처리 / ML 연결  | 공간결합, 안전점수, 모델 검증             | Data / ML / Integration          |
 
